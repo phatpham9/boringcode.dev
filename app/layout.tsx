@@ -3,6 +3,7 @@ import type { Metadata } from "next"
 import "./globals.css"
 import { PWAProvider } from "@/components/pwa-provider"
 import { ThemeProvider } from "@/components/theme-provider"
+import { ThemeMeta } from "@/components/theme-meta"
 
 export const metadata: Metadata = {
   title: "BoringCode.dev - Open Source Development Tools & Generators",
@@ -94,17 +95,15 @@ export default function RootLayout({
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
         <link rel="manifest" href="/manifest.json" />
-        <meta name="theme-color" content="#4a5568" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
-        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-        <meta name="apple-mobile-web-app-title" content="BoringCode.dev" />
         <meta name="mobile-web-app-capable" content="yes" />
-        <meta name="msapplication-TileColor" content="#4a5568" />
         <meta name="msapplication-tap-highlight" content="no" />
+        {/* Theme-related meta tags will be dynamically updated by ThemeMeta component */}
       </head>
       <body>
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange={false}>
+          <ThemeMeta />
           <PWAProvider>{children}</PWAProvider>
         </ThemeProvider>
       </body>
