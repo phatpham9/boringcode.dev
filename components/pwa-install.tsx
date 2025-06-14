@@ -82,26 +82,26 @@ export function PWAInstall() {
   }
 
   return (
-    <div className="fixed bottom-4 left-4 right-4 md:left-auto md:right-4 md:max-w-sm bg-white border border-gray-200 rounded-lg shadow-lg p-4 z-50">
+    <div className="fixed bottom-4 left-4 right-4 md:left-auto md:right-4 md:max-w-sm bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg p-4 z-50 transition-colors">
       <div className="flex items-start gap-3">
         <div className="flex-shrink-0">
-          <Download className="w-6 h-6 text-blue-600" />
+          <Download className="w-6 h-6 text-blue-600 dark:text-blue-400" />
         </div>
         <div className="flex-1">
-          <h3 className="font-semibold text-gray-900 text-sm">Install BoringCode.dev</h3>
-          <p className="text-xs text-gray-600 mt-1">
+          <h3 className="font-semibold text-gray-900 dark:text-white text-sm">Install BoringCode.dev</h3>
+          <p className="text-xs text-gray-600 dark:text-gray-300 mt-1">
             Install our app for quick access to development tools and offline browsing.
           </p>
           <div className="flex gap-2 mt-3">
             <button
               onClick={handleInstallClick}
-              className="px-3 py-1.5 bg-blue-600 text-white text-xs rounded hover:bg-blue-700 transition-colors"
+              className="px-3 py-1.5 bg-blue-600 dark:bg-blue-500 text-white text-xs rounded hover:bg-blue-700 dark:hover:bg-blue-600 transition-colors"
             >
               Install
             </button>
             <button
               onClick={handleDismiss}
-              className="px-3 py-1.5 text-gray-600 text-xs rounded hover:bg-gray-100 transition-colors"
+              className="px-3 py-1.5 text-gray-600 dark:text-gray-300 text-xs rounded hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
             >
               Not now
             </button>
@@ -109,7 +109,7 @@ export function PWAInstall() {
         </div>
         <button
           onClick={handleDismiss}
-          className="flex-shrink-0 text-gray-400 hover:text-gray-600"
+          className="flex-shrink-0 text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300"
           aria-label="Dismiss install prompt"
         >
           <X className="w-4 h-4" />

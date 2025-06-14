@@ -7,9 +7,7 @@ export default function Home() {
   return (
     <>
       <StructuredData />
-      <main className="min-h-screen bg-white">
-        <GitHubOrg />
-      </main>
+      <GitHubOrg />
       <PWAInstall />
       <OfflineIndicator />
     </>
