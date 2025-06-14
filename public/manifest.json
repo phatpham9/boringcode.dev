@@ -5,7 +5,7 @@
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",
-  "theme_color": "#000000",
+  "theme_color": "#4a5568",
   "orientation": "portrait-primary",
   "categories": ["developer", "productivity", "utilities"],
   "lang": "en",
@@ -44,18 +44,11 @@
   ],
   "screenshots": [
     {
-      "src": "/screenshots/desktop.png",
-      "sizes": "1280x720",
+      "src": "/og-image.png",
+      "sizes": "512x512",
       "type": "image/png",
       "form_factor": "wide",
       "label": "BoringCode.dev desktop view"
-    },
-    {
-      "src": "/screenshots/mobile.png",
-      "sizes": "390x844",
-      "type": "image/png",
-      "form_factor": "narrow",
-      "label": "BoringCode.dev mobile view"
     }
   ],
   "shortcuts": [

@@ -27,10 +27,23 @@ export async function GET(request: NextRequest) {
       })
 
       if (!orgResponse.ok) {
+        if (orgResponse.status === 404) {
+          // Return fallback data if org not found
+          return NextResponse.json({
+            login: "boringcode-dev",
+            name: "BoringCode.dev",
+            description: "We write the boring stuff, so you don't have to.",
+            avatar_url: "/logo.png",
+            html_url: "https://github.com/boringcode-dev",
+            public_repos: 0,
+          })
+        }
         throw new Error(`Failed to fetch organization: ${orgResponse.status}`)
       }
 
       const orgData = await orgResponse.json()
+      // Override avatar_url to use our custom logo
+      orgData.avatar_url = "/logo.png"
       return NextResponse.json(orgData)
     }
 
@@ -42,6 +55,13 @@ export async function GET(request: NextRequest) {
       })
 
       if (!reposResponse.ok) {
+        if (reposResponse.status === 404) {
+          // Return empty repos if org not found
+          return NextResponse.json({
+            repos: [],
+            totalCount: 0,
+          })
+        }
         throw new Error(`Failed to fetch repositories: ${reposResponse.status}`)
       }
 
@@ -61,6 +81,26 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ error: "Invalid type parameter" }, { status: 400 })
   } catch (error) {
     console.error("GitHub API Error:", error)
+
+    // Return fallback data on error
+    if (type === "org") {
+      return NextResponse.json({
+        login: "boringcode-dev",
+        name: "BoringCode.dev",
+        description: "We write the boring stuff, so you don't have to.",
+        avatar_url: "/logo.png",
+        html_url: "https://github.com/boringcode-dev",
+        public_repos: 0,
+      })
+    }
+
+    if (type === "repos") {
+      return NextResponse.json({
+        repos: [],
+        totalCount: 0,
+      })
+    }
+
     return NextResponse.json({ error: error instanceof Error ? error.message : "An error occurred" }, { status: 500 })
   }
 }
