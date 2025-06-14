@@ -42,6 +42,32 @@ body {
   }
 }
 
+/* Prevent black background during overscroll on mobile */
+html,
+body {
+  overscroll-behavior: none;
+  background-color: white;
+}
+
+.dark html,
+.dark body {
+  background-color: #111827;
+}
+
+/* Additional mobile overscroll fixes */
+@media (max-width: 768px) {
+  html {
+    overscroll-behavior-y: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  body {
+    position: relative;
+    min-height: 100vh;
+    min-height: 100dvh; /* Dynamic viewport height for mobile */
+  }
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;
