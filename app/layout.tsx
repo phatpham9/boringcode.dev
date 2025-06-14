@@ -43,9 +43,9 @@ export const metadata: Metadata = {
       "We write the boring stuff, so you don't have to. Discover our collection of open source development tools, code generators, and configuration packages.",
     images: [
       {
-        url: "/og-image.png",
-        width: 1200,
-        height: 630,
+        url: "/icon-512x512.png",
+        width: 512,
+        height: 512,
         alt: "BoringCode.dev - Open Source Development Tools",
       },
     ],
@@ -55,7 +55,7 @@ export const metadata: Metadata = {
     title: "BoringCode.dev - Open Source Development Tools & Generators",
     description:
       "We write the boring stuff, so you don't have to. Discover our collection of open source development tools and generators.",
-    images: ["/og-image.png"],
+    images: ["/icon-512x512.png"],
     creator: "@boringcodedev",
   },
   alternates: {
@@ -71,6 +71,13 @@ export const metadata: Metadata = {
     telephone: false,
   },
   manifest: "/manifest.json",
+  icons: {
+    icon: [
+      { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
+      { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+    ],
+    apple: [{ url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" }],
+  },
 }
 
 export default function RootLayout({
@@ -81,10 +88,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <link rel="icon" href="/favicon.ico" />
-        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+        <link rel="icon" href="/favicon.ico" sizes="16x16" />
         <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
         <link rel="manifest" href="/manifest.json" />
         <meta name="theme-color" content="#000000" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
