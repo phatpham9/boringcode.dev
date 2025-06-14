@@ -23,48 +23,87 @@ body {
   /* Ensure proper spacing for notched devices */
   @supports (padding: max(0px)) {
     .pt-safe {
-      padding-top: max(1rem, env(safe-area-inset-top));
+      padding-top: max(0.5rem, env(safe-area-inset-top));
     }
 
     .safe-area-inset-top {
       top: max(1rem, calc(1rem + env(safe-area-inset-top)));
     }
   }
-
-  /* Additional PWA support */
-  @media (display-mode: standalone) {
-    body {
-      padding-top: env(safe-area-inset-top);
-      padding-left: env(safe-area-inset-left);
-      padding-right: env(safe-area-inset-right);
-      padding-bottom: env(safe-area-inset-bottom);
-    }
-  }
 }
 
-/* Prevent black background during overscroll on mobile */
-html,
-body {
+/* Prevent black background during overscroll on mobile but allow normal scrolling */
+html {
   overscroll-behavior: none;
   background-color: white;
+  /* Remove any iOS scroll blocking */
+  -webkit-overflow-scrolling: touch;
 }
 
-.dark html,
+body {
+  background-color: white;
+  /* Ensure body can scroll normally */
+  overflow-x: hidden;
+  overflow-y: auto;
+  /* Remove any height constraints that might block scrolling */
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+.dark html {
+  background-color: #111827;
+}
+
 .dark body {
   background-color: #111827;
 }
 
-/* Additional mobile overscroll fixes */
-@media (max-width: 768px) {
+/* iOS specific fixes */
+@supports (-webkit-touch-callout: none) {
+  /* iOS Safari specific styles */
   html {
-    overscroll-behavior-y: none;
+    /* Allow normal scrolling on iOS */
     -webkit-overflow-scrolling: touch;
+    overflow-y: auto;
   }
 
   body {
+    /* Prevent iOS from adding extra padding */
     position: relative;
+    /* Ensure scrolling works */
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+/* PWA standalone mode adjustments */
+@media (display-mode: standalone) {
+  body {
+    /* Reduce padding in standalone mode */
+    padding-top: max(0.5rem, env(safe-area-inset-top));
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+    padding-bottom: max(0.5rem, env(safe-area-inset-bottom));
+  }
+}
+
+/* Mobile specific adjustments */
+@media (max-width: 768px) {
+  html {
+    /* Ensure scrolling works on mobile */
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    /* Prevent zoom on input focus */
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    /* Reduce minimum height on mobile to prevent scroll blocking */
     min-height: 100vh;
-    min-height: 100dvh; /* Dynamic viewport height for mobile */
+    min-height: 100dvh;
+    /* Ensure normal scrolling */
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
   }
 }
 

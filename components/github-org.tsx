@@ -114,9 +114,9 @@ export function GitHubOrg() {
 
   if (loading) {
     return (
-      <div className={`min-h-screen bg-white dark:bg-gray-900 transition-colors ${isStandalone ? "pt-safe" : ""}`}>
-        <div className="container mx-auto px-4 py-16">
-          <div className="flex flex-col items-center justify-center gap-4">
+      <div className="min-h-screen bg-white dark:bg-gray-900 transition-colors">
+        <div className="container mx-auto px-4 py-8">
+          <div className="flex flex-col items-center justify-center gap-4 min-h-[50vh]">
             <LoadingSpinner />
             <p className="text-gray-600 dark:text-gray-400">Loading projects...</p>
           </div>
@@ -126,17 +126,15 @@ export function GitHubOrg() {
   }
 
   return (
-    <div
-      className={`min-h-screen min-h-dvh bg-white dark:bg-gray-900 transition-colors ${isStandalone ? "pt-safe" : ""}`}
-    >
-      {/* Theme Toggle - Adjusted for PWA safe area */}
+    <div className="min-h-screen bg-white dark:bg-gray-900 transition-colors">
+      {/* Theme Toggle - Fixed position with proper spacing */}
       <div className={`fixed top-4 right-4 z-50 ${isStandalone ? "safe-area-inset-top" : ""}`}>
         <ThemeToggle />
       </div>
 
-      <div className="container mx-auto px-4 py-16 max-w-6xl">
-        {/* Header */}
-        <header className="text-center mb-16">
+      <div className="container mx-auto px-4 py-8 max-w-6xl">
+        {/* Header - Reduced top padding */}
+        <header className={`text-center mb-12 ${isStandalone ? "pt-safe" : "pt-4"}`}>
           <div className="flex items-center justify-center mb-6">
             <div className="p-4 rounded-full bg-gray-100 dark:bg-gray-800 transition-colors">
               <Image
@@ -155,7 +153,7 @@ export function GitHubOrg() {
           <p className="text-xl text-gray-600 dark:text-gray-300 mb-6 transition-colors">
             {org?.description || "We write the boring stuff, so you don't have to."}
           </p>
-          <div className="flex items-center justify-center gap-4 text-sm text-gray-500 dark:text-gray-400 transition-colors">
+          <div className="flex items-center justify-center gap-4 text-sm text-gray-500 dark:text-gray-400 transition-colors flex-wrap">
             <div className="flex items-center gap-1">
               <MapPin className="w-4 h-4" />
               <span>Ho Chi Minh, Vietnam</span>
@@ -312,8 +310,8 @@ export function GitHubOrg() {
           </section>
         )}
 
-        {/* Footer */}
-        <footer className="mt-16 pt-8 border-t border-gray-200 dark:border-gray-700 text-center text-sm text-gray-500 dark:text-gray-400 transition-colors">
+        {/* Footer - Reduced bottom padding */}
+        <footer className="mt-12 pt-8 border-t border-gray-200 dark:border-gray-700 text-center text-sm text-gray-500 dark:text-gray-400 transition-colors mb-4">
           <p>Built with Next.js and Tailwind CSS • Data from GitHub API</p>
         </footer>
       </div>
