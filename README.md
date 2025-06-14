@@ -1,22 +1,30 @@
-<div align="center">
-  <h1>boringcodes.com</h1>
-  <p>Our Boring Website</p>
+# boringcode.dev
 
-  <div>
-    <a href="https://github.com/boringcodes/boringcodes.com/commits" aria-label="Commitizen Friendly">
-      <img src="https://img.shields.io/badge/commitizen-friendly-brightgreen.svg?style=flat-square">
-    </a>
-    <a href="https://github.com/boringcodes/boringcodes.com" aria-label="Prettier Code Style">
-      <img src="https://img.shields.io/badge/code_style-prettier-brightgreen?style=flat-square">
-    </a>
-    <a href="https://david-dm.org/boringcodes/boringcodes.com" aria-label="Dependencies Status">
-      <img src="https://img.shields.io/david/boringcodes/boringcodes.com?style=flat-square">
-    </a>
-    <a href="https://github.com/boringcodes/boringcodes.com/blob/master/LICENSE" aria-label="MIT License">
-      <img src="https://img.shields.io/github/license/boringcodes/boringcodes.com?color=brightgreen&style=flat-square">
-    </a>
-    <a href="https://github.com/boringcodes" aria-label="BoringCodes Verified">
-      <img src="https://img.shields.io/badge/boringcodes-verified-brightgreen?style=flat-square">
-    </a>
-  </div>
-</div>
+*Automatically synced with your [v0.dev](https://v0.dev) deployments*
+
+[![Deployed on Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-black?style=for-the-badge&logo=vercel)](https://vercel.com/phatpham9-projects/v0-boringcode-dev)
+[![Built with v0](https://img.shields.io/badge/Built%20with-v0.dev-black?style=for-the-badge)](https://v0.dev/chat/projects/Sg6AIp7v8Jb)
+
+## Overview
+
+This repository will stay in sync with your deployed chats on [v0.dev](https://v0.dev).
+Any changes you make to your deployed app will be automatically pushed to this repository from [v0.dev](https://v0.dev).
+
+## Deployment
+
+Your project is live at:
+
+**[https://vercel.com/phatpham9-projects/v0-boringcode-dev](https://vercel.com/phatpham9-projects/v0-boringcode-dev)**
+
+## Build your app
+
+Continue building your app on:
+
+**[https://v0.dev/chat/projects/Sg6AIp7v8Jb](https://v0.dev/chat/projects/Sg6AIp7v8Jb)**
+
+## How It Works
+
+1. Create and modify your project using [v0.dev](https://v0.dev)
+2. Deploy your chats from the v0 interface
+3. Changes are automatically pushed to this repository
+4. Vercel deploys the latest version from this repository
