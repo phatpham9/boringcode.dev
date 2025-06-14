@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge"
 import { Star, GitFork, ExternalLink, Calendar, MapPin, Mail, Github } from "lucide-react"
 import { ThemeToggle } from "@/components/theme-toggle"
 import Image from "next/image"
+import { LoadingSpinner } from "@/components/loading-spinner"
 
 interface Repository {
   id: number
@@ -115,8 +116,9 @@ export function GitHubOrg() {
     return (
       <div className={`min-h-screen bg-white dark:bg-gray-900 transition-colors ${isStandalone ? "pt-safe" : ""}`}>
         <div className="container mx-auto px-4 py-16">
-          <div className="flex items-center justify-center">
-            <div className="text-lg text-gray-600 dark:text-gray-400">Loading...</div>
+          <div className="flex flex-col items-center justify-center gap-4">
+            <LoadingSpinner />
+            <p className="text-gray-600 dark:text-gray-400">Loading projects...</p>
           </div>
         </div>
       </div>
@@ -124,7 +126,9 @@ export function GitHubOrg() {
   }
 
   return (
-    <div className={`min-h-screen bg-white dark:bg-gray-900 transition-colors ${isStandalone ? "pt-safe" : ""}`}>
+    <div
+      className={`min-h-screen min-h-dvh bg-white dark:bg-gray-900 transition-colors ${isStandalone ? "pt-safe" : ""}`}
+    >
       {/* Theme Toggle - Adjusted for PWA safe area */}
       <div className={`fixed top-4 right-4 z-50 ${isStandalone ? "safe-area-inset-top" : ""}`}>
         <ThemeToggle />
@@ -297,7 +301,7 @@ export function GitHubOrg() {
         {totalRepos > 9 && (
           <section className="text-center mt-12">
             <a
-              href={org?.html_url || "https://github.com/boringcode-dev"}
+              href="https://github.com/orgs/boringcode-dev/repositories"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-6 py-3 bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900 rounded-lg hover:bg-gray-800 dark:hover:bg-gray-200 transition-colors"

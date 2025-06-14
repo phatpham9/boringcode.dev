@@ -45,7 +45,13 @@ export const metadata: Metadata = {
       "We write the boring stuff, so you don't have to. Discover our collection of open source development tools, code generators, and configuration packages.",
     images: [
       {
-        url: "/og-image.png",
+        url: "https://boringcode.dev/logo.png",
+        width: 512,
+        height: 512,
+        alt: "BoringCode.dev - Open Source Development Tools",
+      },
+      {
+        url: "https://boringcode.dev/og-image.png",
         width: 512,
         height: 512,
         alt: "BoringCode.dev - Open Source Development Tools",
@@ -57,7 +63,7 @@ export const metadata: Metadata = {
     title: "BoringCode.dev - Open Source Development Tools & Generators",
     description:
       "We write the boring stuff, so you don't have to. Discover our collection of open source development tools and generators.",
-    images: ["/og-image.png"],
+    images: ["https://boringcode.dev/logo.png"],
     creator: "@boringcodedev",
   },
   alternates: {
@@ -77,6 +83,7 @@ export const metadata: Metadata = {
     icon: [
       { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
       { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+      { url: "/logo.png", sizes: "512x512", type: "image/png" },
     ],
     apple: [{ url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" }],
   },
@@ -98,6 +105,15 @@ export default function RootLayout({
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="msapplication-tap-highlight" content="no" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+        {/* Additional social sharing meta tags */}
+        <meta property="og:image" content="https://boringcode.dev/logo.png" />
+        <meta property="og:image:width" content="512" />
+        <meta property="og:image:height" content="512" />
+        <meta property="og:image:type" content="image/png" />
+        <meta name="twitter:image" content="https://boringcode.dev/logo.png" />
+
         {/* Theme-related meta tags will be dynamically updated by ThemeMeta component */}
       </head>
       <body>

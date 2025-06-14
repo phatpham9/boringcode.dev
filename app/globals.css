@@ -25,6 +25,46 @@ body {
     .pt-safe {
       padding-top: max(1rem, env(safe-area-inset-top));
     }
+
+    .safe-area-inset-top {
+      top: max(1rem, calc(1rem + env(safe-area-inset-top)));
+    }
+  }
+
+  /* Additional PWA support */
+  @media (display-mode: standalone) {
+    body {
+      padding-top: env(safe-area-inset-top);
+      padding-left: env(safe-area-inset-left);
+      padding-right: env(safe-area-inset-right);
+      padding-bottom: env(safe-area-inset-bottom);
+    }
+  }
+}
+
+/* Prevent black background during overscroll on mobile */
+html,
+body {
+  overscroll-behavior: none;
+  background-color: white;
+}
+
+.dark html,
+.dark body {
+  background-color: #111827;
+}
+
+/* Additional mobile overscroll fixes */
+@media (max-width: 768px) {
+  html {
+    overscroll-behavior-y: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  body {
+    position: relative;
+    min-height: 100vh;
+    min-height: 100dvh; /* Dynamic viewport height for mobile */
   }
 }
 

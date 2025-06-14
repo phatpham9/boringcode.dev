@@ -35,15 +35,19 @@ export function ThemeMeta() {
     }
 
     // Update Apple status bar style based on theme and standalone mode
-    const appleStatusBarMeta = document.querySelector('meta[name="apple-mobile-web-app-status-bar-style"]')
-    if (appleStatusBarMeta) {
-      if (isStandalone) {
-        // In standalone mode, use black-translucent for transparency
-        appleStatusBarMeta.setAttribute("content", "black-translucent")
-      } else {
-        // In browser mode, use theme-appropriate style
-        appleStatusBarMeta.setAttribute("content", resolvedTheme === "dark" ? "black" : "default")
-      }
+    let appleStatusBarMeta = document.querySelector('meta[name="apple-mobile-web-app-status-bar-style"]')
+    if (!appleStatusBarMeta) {
+      appleStatusBarMeta = document.createElement("meta")
+      appleStatusBarMeta.setAttribute("name", "apple-mobile-web-app-status-bar-style")
+      document.head.appendChild(appleStatusBarMeta)
+    }
+
+    if (isStandalone) {
+      // In standalone mode, always use black-translucent for transparency with safe areas
+      appleStatusBarMeta.setAttribute("content", "black-translucent")
+    } else {
+      // In browser mode, use theme-appropriate style
+      appleStatusBarMeta.setAttribute("content", resolvedTheme === "dark" ? "black-translucent" : "default")
     }
 
     // Update MSApplication tile color
