@@ -35,6 +35,14 @@ export function GitHubOrg() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [totalRepos, setTotalRepos] = useState(0)
+  const [isStandalone, setIsStandalone] = useState(false)
+
+  useEffect(() => {
+    // Check if running as PWA (standalone mode)
+    const standalone =
+      window.matchMedia("(display-mode: standalone)").matches || (window.navigator as any).standalone === true
+    setIsStandalone(standalone)
+  }, [])
 
   const fetchData = async () => {
     try {
@@ -105,7 +113,7 @@ export function GitHubOrg() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-white dark:bg-gray-900 transition-colors">
+      <div className={`min-h-screen bg-white dark:bg-gray-900 transition-colors ${isStandalone ? "pt-safe" : ""}`}>
         <div className="container mx-auto px-4 py-16">
           <div className="flex items-center justify-center">
             <div className="text-lg text-gray-600 dark:text-gray-400">Loading...</div>
@@ -116,9 +124,9 @@ export function GitHubOrg() {
   }
 
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-900 transition-colors">
-      {/* Theme Toggle */}
-      <div className="fixed top-4 right-4 z-50">
+    <div className={`min-h-screen bg-white dark:bg-gray-900 transition-colors ${isStandalone ? "pt-safe" : ""}`}>
+      {/* Theme Toggle - Adjusted for PWA safe area */}
+      <div className={`fixed top-4 right-4 z-50 ${isStandalone ? "safe-area-inset-top" : ""}`}>
         <ThemeToggle />
       </div>
 
