@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { Star, GitFork, ExternalLink, Calendar } from "lucide-react"
+import { Star, GitFork, ExternalLink, Calendar, MapPin, Mail, Github } from "lucide-react"
 import Image from "next/image"
 
 interface Repository {
@@ -33,38 +33,38 @@ export function GitHubOrg() {
   const [repos, setRepos] = useState<Repository[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+  const [totalRepos, setTotalRepos] = useState(0)
 
-  const orgName = "boringcode-dev"
+  const fetchData = async () => {
+    try {
+      setLoading(true)
+
+      // Fetch organization info
+      const orgResponse = await fetch("/api/github?type=org")
+      if (!orgResponse.ok) {
+        throw new Error("Failed to fetch organization data")
+      }
+      const orgData = await orgResponse.json()
+      setOrg(orgData)
+
+      // Fetch repositories
+      const reposResponse = await fetch("/api/github?type=repos")
+      if (!reposResponse.ok) {
+        throw new Error("Failed to fetch repositories data")
+      }
+      const reposData = await reposResponse.json()
+
+      setRepos(reposData.repos)
+      setTotalRepos(reposData.totalCount)
+    } catch (err) {
+      console.error("API Error:", err)
+      setError(err instanceof Error ? err.message : "An error occurred")
+    } finally {
+      setLoading(false)
+    }
+  }
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setLoading(true)
-
-        // Fetch organization info
-        const orgResponse = await fetch(`https://api.github.com/orgs/${orgName}`)
-        if (!orgResponse.ok) throw new Error("Failed to fetch organization")
-        const orgData = await orgResponse.json()
-        setOrg(orgData)
-
-        // Fetch repositories
-        const reposResponse = await fetch(`https://api.github.com/orgs/${orgName}/repos?sort=updated&per_page=50`)
-        if (!reposResponse.ok) throw new Error("Failed to fetch repositories")
-        const reposData = await reposResponse.json()
-
-        // Filter out forks and sort by stars
-        const filteredRepos = reposData
-          .filter((repo: Repository) => !repo.name.includes(".github"))
-          .sort((a: Repository, b: Repository) => b.stargazers_count - a.stargazers_count)
-
-        setRepos(filteredRepos)
-      } catch (err) {
-        setError(err instanceof Error ? err.message : "An error occurred")
-      } finally {
-        setLoading(false)
-      }
-    }
-
     fetchData()
   }, [])
 
@@ -102,8 +102,29 @@ export function GitHubOrg() {
   if (error) {
     return (
       <div className="container mx-auto px-4 py-16">
-        <div className="flex items-center justify-center">
+        <div className="flex flex-col items-center justify-center gap-4">
           <div className="text-lg text-red-600">Error: {error}</div>
+          <button
+            onClick={() => {
+              setError(null)
+              fetchData()
+            }}
+            className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+          >
+            Try Again
+          </button>
+          <p className="text-sm text-gray-500 text-center max-w-md">
+            If the error persists, it might be due to GitHub API rate limiting. You can also visit our{" "}
+            <a
+              href="https://github.com/boringcode-dev"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-blue-600 hover:underline"
+            >
+              GitHub organization
+            </a>{" "}
+            directly.
+          </p>
         </div>
       </div>
     )
@@ -112,7 +133,7 @@ export function GitHubOrg() {
   return (
     <div className="container mx-auto px-4 py-16 max-w-6xl">
       {/* Header */}
-      <div className="text-center mb-16">
+      <header className="text-center mb-16">
         <div className="flex items-center justify-center mb-6">
           {org?.avatar_url && (
             <Image
@@ -129,91 +150,125 @@ export function GitHubOrg() {
           {org?.description || "We write the boring stuff, so you don't have to."}
         </p>
         <div className="flex items-center justify-center gap-4 text-sm text-gray-500">
-          <span>{org?.public_repos} public repositories</span>
+          <div className="flex items-center gap-1">
+            <MapPin className="w-4 h-4" />
+            <span>Ho Chi Minh, Vietnam</span>
+          </div>
+          <div className="flex items-center gap-1">
+            <Github className="w-4 h-4" />
+            <a
+              href={org?.html_url || "https://github.com/boringcode-dev"}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-gray-700 transition-colors"
+            >
+              GitHub
+            </a>
+          </div>
+          <div className="flex items-center gap-1">
+            <Mail className="w-4 h-4" />
+            <a href="mailto:hi@boringcode.dev" className="hover:text-gray-700 transition-colors">
+              hi@boringcode.dev
+            </a>
+          </div>
+        </div>
+      </header>
+
+      {/* Projects Section */}
+      <section aria-labelledby="featured-projects">
+        <h2 id="featured-projects" className="sr-only">
+          Featured Projects
+        </h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {repos.map((repo) => (
+            <article key={repo.id}>
+              <Card className="hover:shadow-lg transition-shadow h-full">
+                <CardHeader>
+                  <div className="flex items-start justify-between">
+                    <div className="flex-1">
+                      <CardTitle className="text-lg mb-2">
+                        <a
+                          href={repo.html_url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="hover:text-blue-600 transition-colors"
+                        >
+                          {repo.name}
+                        </a>
+                      </CardTitle>
+                      <CardDescription className="text-sm">
+                        {repo.description || "No description available"}
+                      </CardDescription>
+                    </div>
+                  </div>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-4">
+                    {/* Language and Stats */}
+                    <div className="flex items-center justify-between text-sm text-gray-600">
+                      <div className="flex items-center gap-2">
+                        {repo.language && (
+                          <div className="flex items-center gap-1">
+                            <div className={`w-3 h-3 rounded-full ${getLanguageColor(repo.language)}`} />
+                            <span>{repo.language}</span>
+                          </div>
+                        )}
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <div className="flex items-center gap-1">
+                          <Star className="w-4 h-4" />
+                          <span>{repo.stargazers_count}</span>
+                        </div>
+                        <div className="flex items-center gap-1">
+                          <GitFork className="w-4 h-4" />
+                          <span>{repo.forks_count}</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Topics */}
+                    {repo.topics.length > 0 && (
+                      <div className="flex flex-wrap gap-1">
+                        {repo.topics.slice(0, 3).map((topic) => (
+                          <Badge key={topic} variant="secondary" className="text-xs">
+                            {topic}
+                          </Badge>
+                        ))}
+                        {repo.topics.length > 3 && (
+                          <Badge variant="outline" className="text-xs">
+                            +{repo.topics.length - 3}
+                          </Badge>
+                        )}
+                      </div>
+                    )}
+
+                    {/* Last Updated */}
+                    <div className="flex items-center gap-1 text-xs text-gray-500">
+                      <Calendar className="w-3 h-3" />
+                      <span>Updated {formatDate(repo.updated_at)}</span>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      {/* View More Section */}
+      {totalRepos > 9 && (
+        <section className="text-center mt-12">
           <a
             href={org?.html_url}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-1 hover:text-gray-700 transition-colors"
+            className="inline-flex items-center gap-2 px-6 py-3 bg-gray-900 text-white rounded-lg hover:bg-gray-800 transition-colors"
+            aria-label="View all projects on GitHub"
           >
-            View on GitHub <ExternalLink className="w-4 h-4" />
+            View More Projects <ExternalLink className="w-4 h-4" />
           </a>
-        </div>
-      </div>
-
-      {/* Projects Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {repos.map((repo) => (
-          <Card key={repo.id} className="hover:shadow-lg transition-shadow">
-            <CardHeader>
-              <div className="flex items-start justify-between">
-                <div className="flex-1">
-                  <CardTitle className="text-lg mb-2">
-                    <a
-                      href={repo.html_url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="hover:text-blue-600 transition-colors"
-                    >
-                      {repo.name}
-                    </a>
-                  </CardTitle>
-                  <CardDescription className="text-sm">
-                    {repo.description || "No description available"}
-                  </CardDescription>
-                </div>
-              </div>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                {/* Language and Stats */}
-                <div className="flex items-center justify-between text-sm text-gray-600">
-                  <div className="flex items-center gap-2">
-                    {repo.language && (
-                      <div className="flex items-center gap-1">
-                        <div className={`w-3 h-3 rounded-full ${getLanguageColor(repo.language)}`} />
-                        <span>{repo.language}</span>
-                      </div>
-                    )}
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <div className="flex items-center gap-1">
-                      <Star className="w-4 h-4" />
-                      <span>{repo.stargazers_count}</span>
-                    </div>
-                    <div className="flex items-center gap-1">
-                      <GitFork className="w-4 h-4" />
-                      <span>{repo.forks_count}</span>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Topics */}
-                {repo.topics.length > 0 && (
-                  <div className="flex flex-wrap gap-1">
-                    {repo.topics.slice(0, 3).map((topic) => (
-                      <Badge key={topic} variant="secondary" className="text-xs">
-                        {topic}
-                      </Badge>
-                    ))}
-                    {repo.topics.length > 3 && (
-                      <Badge variant="outline" className="text-xs">
-                        +{repo.topics.length - 3}
-                      </Badge>
-                    )}
-                  </div>
-                )}
-
-                {/* Last Updated */}
-                <div className="flex items-center gap-1 text-xs text-gray-500">
-                  <Calendar className="w-3 h-3" />
-                  <span>Updated {formatDate(repo.updated_at)}</span>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
+        </section>
+      )}
 
       {/* Footer */}
       <footer className="mt-16 pt-8 border-t border-gray-200 text-center text-sm text-gray-500">

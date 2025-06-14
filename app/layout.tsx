@@ -1,10 +1,76 @@
-import type { Metadata } from 'next'
-import './globals.css'
+import type React from "react"
+import type { Metadata } from "next"
+import "./globals.css"
+import { PWAProvider } from "@/components/pwa-provider"
 
 export const metadata: Metadata = {
-  title: 'v0 App',
-  description: 'Created with v0',
-  generator: 'v0.dev',
+  title: "BoringCode.dev - Open Source Development Tools & Generators",
+  description:
+    "We write the boring stuff, so you don't have to. Discover our collection of open source development tools, code generators, and configuration packages for modern web development.",
+  keywords: [
+    "open source",
+    "development tools",
+    "code generators",
+    "typescript",
+    "javascript",
+    "prettier config",
+    "eslint config",
+    "microservices",
+    "boringcode",
+    "developer productivity",
+  ],
+  authors: [{ name: "BoringCode.dev Team" }],
+  creator: "BoringCode.dev",
+  publisher: "BoringCode.dev",
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: "https://boringcode.dev",
+    siteName: "BoringCode.dev",
+    title: "BoringCode.dev - Open Source Development Tools & Generators",
+    description:
+      "We write the boring stuff, so you don't have to. Discover our collection of open source development tools, code generators, and configuration packages.",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "BoringCode.dev - Open Source Development Tools",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "BoringCode.dev - Open Source Development Tools & Generators",
+    description:
+      "We write the boring stuff, so you don't have to. Discover our collection of open source development tools and generators.",
+    images: ["/og-image.png"],
+    creator: "@boringcodedev",
+  },
+  alternates: {
+    canonical: "https://boringcode.dev",
+  },
+  category: "technology",
+  generator: "Next.js",
+  applicationName: "BoringCode.dev",
+  referrer: "origin-when-cross-origin",
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
+  manifest: "/manifest.json",
 }
 
 export default function RootLayout({
@@ -14,7 +80,24 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <head>
+        <link rel="icon" href="/favicon.ico" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+        <link rel="manifest" href="/manifest.json" />
+        <meta name="theme-color" content="#000000" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+        <meta name="apple-mobile-web-app-title" content="BoringCode.dev" />
+        <meta name="mobile-web-app-capable" content="yes" />
+        <meta name="msapplication-TileColor" content="#000000" />
+        <meta name="msapplication-tap-highlight" content="no" />
+      </head>
+      <body>
+        <PWAProvider>{children}</PWAProvider>
+      </body>
     </html>
   )
 }
