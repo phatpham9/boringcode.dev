@@ -211,83 +211,81 @@ export function GitHubOrg() {
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {repos.map((repo) => (
-                <article key={repo.id}>
-                  <Card className="hover:shadow-lg dark:hover:shadow-xl hover:shadow-gray-200 dark:hover:shadow-gray-900/50 transition-all h-full bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
-                    <CardHeader>
-                      <div className="flex items-start justify-between">
-                        <div className="flex-1">
-                          <CardTitle className="text-lg mb-2">
-                            <a
-                              href={repo.html_url}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors text-gray-900 dark:text-white"
-                            >
-                              {repo.name}
-                            </a>
-                          </CardTitle>
-                          <CardDescription className="text-sm text-gray-600 dark:text-gray-300">
-                            {repo.description || "No description available"}
-                          </CardDescription>
+                <article key={repo.id} className="group">
+                  <Card className="h-full bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 transition-all duration-300 ease-in-out hover:shadow-xl hover:shadow-gray-200/50 dark:hover:shadow-gray-900/50 hover:-translate-y-1 hover:scale-[1.02] cursor-pointer group-hover:border-gray-300 dark:group-hover:border-gray-600">
+                    <a href={repo.html_url} target="_blank" rel="noopener noreferrer" className="block h-full">
+                      <CardHeader>
+                        <div className="flex items-start justify-between">
+                          <div className="flex-1">
+                            <CardTitle className="text-lg mb-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-200 text-gray-900 dark:text-white">
+                              <span className="flex items-center gap-2">
+                                {repo.name}
+                                <ExternalLink className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
+                              </span>
+                            </CardTitle>
+                            <CardDescription className="text-sm text-gray-600 dark:text-gray-300 group-hover:text-gray-700 dark:group-hover:text-gray-200 transition-colors duration-200">
+                              {repo.description || "No description available"}
+                            </CardDescription>
+                          </div>
                         </div>
-                      </div>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="space-y-4">
-                        {/* Language and Stats */}
-                        <div className="flex items-center justify-between text-sm text-gray-600 dark:text-gray-400">
-                          <div className="flex items-center gap-2">
-                            {repo.language && (
+                      </CardHeader>
+                      <CardContent>
+                        <div className="space-y-4">
+                          {/* Language and Stats */}
+                          <div className="flex items-center justify-between text-sm text-gray-600 dark:text-gray-400">
+                            <div className="flex items-center gap-2">
+                              {repo.language && (
+                                <div className="flex items-center gap-1">
+                                  <div className={`w-3 h-3 rounded-full ${getLanguageColor(repo.language)}`} />
+                                  <span>{repo.language}</span>
+                                </div>
+                              )}
+                            </div>
+                            <div className="flex items-center gap-3">
                               <div className="flex items-center gap-1">
-                                <div className={`w-3 h-3 rounded-full ${getLanguageColor(repo.language)}`} />
-                                <span>{repo.language}</span>
+                                <Star className="w-4 h-4" />
+                                <span>{repo.stargazers_count}</span>
                               </div>
-                            )}
-                          </div>
-                          <div className="flex items-center gap-3">
-                            <div className="flex items-center gap-1">
-                              <Star className="w-4 h-4" />
-                              <span>{repo.stargazers_count}</span>
-                            </div>
-                            <div className="flex items-center gap-1">
-                              <GitFork className="w-4 h-4" />
-                              <span>{repo.forks_count}</span>
+                              <div className="flex items-center gap-1">
+                                <GitFork className="w-4 h-4" />
+                                <span>{repo.forks_count}</span>
+                              </div>
                             </div>
                           </div>
+
+                          {/* Topics */}
+                          {repo.topics && repo.topics.length > 0 && (
+                            <div className="flex flex-wrap gap-1">
+                              {repo.topics.slice(0, 3).map((topic) => (
+                                <Badge
+                                  key={topic}
+                                  variant="secondary"
+                                  className="text-xs bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600"
+                                >
+                                  {topic}
+                                </Badge>
+                              ))}
+                              {repo.topics.length > 3 && (
+                                <Badge
+                                  variant="outline"
+                                  className="text-xs border-gray-300 dark:border-gray-600 text-gray-600 dark:text-gray-400"
+                                >
+                                  +{repo.topics.length - 3}
+                                </Badge>
+                              )}
+                            </div>
+                          )}
+
+                          {/* Last Updated */}
+                          {repo.updated_at && (
+                            <div className="flex items-center gap-1 text-xs text-gray-500 dark:text-gray-400">
+                              <Calendar className="w-3 h-3" />
+                              <span>Updated {formatDate(repo.updated_at)}</span>
+                            </div>
+                          )}
                         </div>
-
-                        {/* Topics */}
-                        {repo.topics && repo.topics.length > 0 && (
-                          <div className="flex flex-wrap gap-1">
-                            {repo.topics.slice(0, 3).map((topic) => (
-                              <Badge
-                                key={topic}
-                                variant="secondary"
-                                className="text-xs bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600"
-                              >
-                                {topic}
-                              </Badge>
-                            ))}
-                            {repo.topics.length > 3 && (
-                              <Badge
-                                variant="outline"
-                                className="text-xs border-gray-300 dark:border-gray-600 text-gray-600 dark:text-gray-400"
-                              >
-                                +{repo.topics.length - 3}
-                              </Badge>
-                            )}
-                          </div>
-                        )}
-
-                        {/* Last Updated */}
-                        {repo.updated_at && (
-                          <div className="flex items-center gap-1 text-xs text-gray-500 dark:text-gray-400">
-                            <Calendar className="w-3 h-3" />
-                            <span>Updated {formatDate(repo.updated_at)}</span>
-                          </div>
-                        )}
-                      </div>
-                    </CardContent>
+                      </CardContent>
+                    </a>
                   </Card>
                 </article>
               ))}

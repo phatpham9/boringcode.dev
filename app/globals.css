@@ -32,22 +32,27 @@ body {
   }
 }
 
-/* Prevent black background during overscroll on mobile but allow normal scrolling */
+/* Base styling with proper iOS scroll behavior */
 html {
-  overscroll-behavior: none;
   background-color: white;
-  /* Remove any iOS scroll blocking */
+  /* Enable smooth scrolling on iOS */
   -webkit-overflow-scrolling: touch;
+  /* Allow natural iOS overscroll behavior */
+  overscroll-behavior: auto;
 }
 
 body {
   background-color: white;
-  /* Ensure body can scroll normally */
+  /* Ensure body can scroll normally with iOS bounce */
   overflow-x: hidden;
   overflow-y: auto;
-  /* Remove any height constraints that might block scrolling */
   min-height: 100vh;
   min-height: 100dvh;
+  /* Enable iOS momentum scrolling */
+  -webkit-overflow-scrolling: touch;
+  /* Allow natural overscroll on iOS */
+  overscroll-behavior-y: auto;
+  overscroll-behavior-x: none;
 }
 
 .dark html {
@@ -58,52 +63,63 @@ body {
   background-color: #111827;
 }
 
-/* iOS specific fixes */
+/* iOS specific optimizations */
 @supports (-webkit-touch-callout: none) {
   /* iOS Safari specific styles */
   html {
-    /* Allow normal scrolling on iOS */
+    /* Enable natural iOS scrolling with bounce */
     -webkit-overflow-scrolling: touch;
     overflow-y: auto;
+    overscroll-behavior: auto;
   }
 
   body {
-    /* Prevent iOS from adding extra padding */
+    /* Allow iOS bounce scrolling */
     position: relative;
-    /* Ensure scrolling works */
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
+    overscroll-behavior-y: auto;
   }
 }
 
 /* PWA standalone mode adjustments */
 @media (display-mode: standalone) {
+  html {
+    /* Maintain iOS scroll behavior in PWA */
+    overscroll-behavior: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
   body {
-    /* Reduce padding in standalone mode */
+    /* Reduce padding in standalone mode but keep scroll behavior */
     padding-top: max(0.5rem, env(safe-area-inset-top));
     padding-left: env(safe-area-inset-left);
     padding-right: env(safe-area-inset-right);
     padding-bottom: max(0.5rem, env(safe-area-inset-bottom));
+    /* Allow natural overscroll in PWA */
+    overscroll-behavior-y: auto;
   }
 }
 
 /* Mobile specific adjustments */
 @media (max-width: 768px) {
   html {
-    /* Ensure scrolling works on mobile */
+    /* Ensure natural iOS scrolling on mobile */
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
+    overscroll-behavior: auto;
     /* Prevent zoom on input focus */
     -webkit-text-size-adjust: 100%;
   }
 
   body {
-    /* Reduce minimum height on mobile to prevent scroll blocking */
+    /* Enable natural mobile scrolling */
     min-height: 100vh;
     min-height: 100dvh;
-    /* Ensure normal scrolling */
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
+    /* Allow iOS bounce effect */
+    overscroll-behavior-y: auto;
   }
 }
 
