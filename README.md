@@ -49,7 +49,7 @@ This project is built and maintained using [v0.dev](https://v0.dev), Vercel's AI
 
 ### Local Development
 
-\`\`\`bash
+```bash
 # Clone the repository
 git clone https://github.com/boringcode-dev/boringcode.dev.git
 
@@ -61,14 +61,14 @@ npm run dev
 
 # Build for production
 npm run build
-\`\`\`
+```
 
 ### Environment Variables
 
-\`\`\`bash
+```bash
 # Optional: GitHub token for higher API rate limits
 GITHUB_TOKEN=your_github_token_here
-\`\`\`
+```
 
 ## 📄 License
 
